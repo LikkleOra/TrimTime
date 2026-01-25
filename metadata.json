@@ -1,0 +1,5 @@
+{
+  "name": "TrimTime - Barber Scheduling",
+  "description": "A streamlined, mobile-first web application designed to bridge the gap between a barber's schedule and a client's convenience, featuring real-time slot booking and WhatsApp integration.",
+  "requestFramePermissions": []
+}

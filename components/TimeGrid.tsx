@@ -14,7 +14,6 @@ const TimeGrid: React.FC<TimeGridProps> = ({ selectedDate, selectedTime, onTimeS
   const generateSlots = () => {
     const slots: string[] = [];
     const { start, end, interval } = WORKING_HOURS;
-    
     for (let hour = start; hour < end; hour++) {
       for (let min = 0; min < 60; min += interval) {
         const h = hour.toString().padStart(2, '0');
@@ -40,17 +39,16 @@ const TimeGrid: React.FC<TimeGridProps> = ({ selectedDate, selectedTime, onTimeS
             disabled={isOccupied}
             onClick={() => onTimeSelect(time)}
             className={`
-              py-3 px-2 rounded-xl border text-sm font-semibold transition-all
+              py-4 px-2 rounded-none border text-xs font-black transition-all uppercase tracking-widest
               ${isOccupied 
-                ? 'bg-zinc-900 border-zinc-800 text-zinc-600 cursor-not-allowed line-through' 
+                ? 'bg-zinc-950 border-zinc-900 text-zinc-800 cursor-not-allowed line-through' 
                 : isSelected
-                  ? 'bg-amber-500 border-amber-400 text-black ring-2 ring-amber-500/30 shadow-lg'
-                  : 'bg-zinc-900 border-zinc-800 text-zinc-300 hover:border-amber-500/50'
+                  ? 'bg-[#FFC107] border-[#FFC107] text-black shadow-[0_0_15px_rgba(255,193,7,0.3)] scale-[1.05] z-10'
+                  : 'bg-black border-zinc-800 text-zinc-400 hover:border-zinc-600'
               }
             `}
           >
             {time}
-            {isOccupied && <span className="block text-[8px] mt-1 font-bold uppercase opacity-50">Booked</span>}
           </button>
         );
       })}

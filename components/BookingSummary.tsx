@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Service } from '../types';
-import { Send, User, Phone, StickyNote } from 'lucide-react';
+import { Phone, MessageSquare } from 'lucide-react';
 
 interface BookingSummaryProps {
   service: Service;
@@ -23,80 +23,128 @@ const BookingSummary: React.FC<BookingSummaryProps> = ({
   const isFormValid = customerName.trim() && customerPhone.trim();
 
   return (
-    <div className="space-y-6 animate-in slide-in-from-bottom duration-500">
-      <div className="p-4 bg-zinc-900 border border-zinc-800 rounded-2xl">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-xl font-bold text-white">{service.name}</h3>
-          <span className="text-amber-500 font-bold">${service.price}</span>
+    <div className="space-y-8 animate-in slide-in-from-bottom duration-500 pb-10">
+      {/* Receipt Card */}
+      <div className="bg-[#111] border-2 border-[#FFC107] p-8 space-y-8 relative overflow-hidden">
+        {/* Header */}
+        <div className="flex justify-between items-start">
+          <div>
+            <h3 className="text-2xl font-mono-brand font-bold uppercase tracking-tighter">Booking Summary</h3>
+            <p className="text-[10px] font-mono-brand text-zinc-500 uppercase mt-1">Ref: #NZ-2941-DN</p>
+          </div>
+          <span className="bg-black text-white px-3 py-1 text-[9px] font-mono-brand font-bold uppercase">Durban North</span>
         </div>
-        <div className="flex gap-4 text-xs text-zinc-400 font-medium uppercase tracking-wider">
-          <span>{date}</span>
-          <span>{time}</span>
-          <span>{service.duration} Min</span>
+
+        {/* Location Section */}
+        <div className="flex gap-4">
+          <div className="w-10 h-10 bg-zinc-900 flex items-center justify-center">
+             <div className="w-4 h-4 border border-zinc-700"></div>
+          </div>
+          <div>
+            <p className="text-[10px] font-mono-brand text-zinc-500 uppercase">Location</p>
+            <p className="text-sm font-bold leading-snug">28 Mackeurtan Avenue, Durban North</p>
+          </div>
+        </div>
+
+        <div className="border-t border-dashed border-zinc-800" />
+
+        {/* Service Details */}
+        <div className="space-y-4">
+          <div>
+            <p className="text-[9px] font-mono-brand text-zinc-500 uppercase tracking-widest">Service</p>
+            <div className="flex justify-between items-end mt-1">
+              <div>
+                <h4 className="text-lg font-bold font-mono-brand">{service.name}</h4>
+                <p className="text-[10px] font-mono-brand italic text-zinc-500">{service.duration} Mins • All professionals</p>
+              </div>
+              <span className="text-lg font-bold font-mono-brand tracking-tighter">R {service.price.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div className="space-y-1 pt-4 border-t border-zinc-900">
+            <div className="flex justify-between text-[11px] font-mono-brand text-zinc-500 uppercase">
+              <span>Subtotal</span>
+              <span>R {service.price.toFixed(2)}</span>
+            </div>
+            <div className="flex justify-between text-[11px] font-mono-brand text-zinc-500 uppercase">
+              <span>Tax (Incl.)</span>
+              <span>R 0.00</span>
+            </div>
+          </div>
+
+          <div className="border-t-2 border-white pt-4 flex justify-between items-end">
+            <span className="text-2xl font-bold font-mono-brand uppercase">Total</span>
+            <span className="text-2xl font-bold font-mono-brand tracking-tighter">R {service.price.toFixed(2)}</span>
+          </div>
+        </div>
+
+        <div className="border-t border-dashed border-zinc-800" />
+
+        {/* Date Time Section */}
+        <div className="flex justify-between text-[9px] font-mono-brand font-bold uppercase text-zinc-400">
+          <span>Date: {date}</span>
+          <span>Time: {time} PM</span>
+        </div>
+
+        {/* Barcode Element */}
+        <div className="space-y-4 text-center">
+          <div className="barcode-pattern" />
+          <p className="text-[9px] font-mono-brand text-zinc-500 uppercase tracking-[0.3em]">Fadezone Grooming Systems</p>
         </div>
       </div>
 
-      <div className="space-y-4">
-        <div className="relative">
-          <label className="text-xs font-bold text-zinc-500 uppercase ml-1 mb-1 block">Full Name</label>
-          <div className="relative">
-            <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" />
-            <input 
-              type="text" 
-              placeholder="Ex: John Doe"
-              value={customerName}
-              onChange={(e) => onNameChange(e.target.value)}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-amber-500 transition-colors"
-            />
-          </div>
-        </div>
+      {/* Inputs */}
+      <div className="space-y-4 px-2">
+        <input 
+          type="text" 
+          placeholder="ENTER YOUR NAME"
+          value={customerName}
+          onChange={(e) => onNameChange(e.target.value.toUpperCase())}
+          className="w-full bg-zinc-900 border border-zinc-800 p-4 text-xs font-black tracking-widest uppercase focus:outline-none focus:border-[#FFC107] transition-all"
+        />
+        <input 
+          type="tel" 
+          placeholder="PHONE NUMBER"
+          value={customerPhone}
+          onChange={(e) => onPhoneChange(e.target.value)}
+          className="w-full bg-zinc-900 border border-zinc-800 p-4 text-xs font-black tracking-widest uppercase focus:outline-none focus:border-[#FFC107] transition-all"
+        />
+      </div>
 
-        <div className="relative">
-          <label className="text-xs font-bold text-zinc-500 uppercase ml-1 mb-1 block">Phone Number</label>
-          <div className="relative">
-            <Phone size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-600" />
-            <input 
-              type="tel" 
-              placeholder="Ex: 555-0199"
-              value={customerPhone}
-              onChange={(e) => onPhoneChange(e.target.value)}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-amber-500 transition-colors"
-            />
-          </div>
-        </div>
+      {/* Action Buttons */}
+      <div className="flex gap-3 px-2">
+        <button className="w-20 h-16 bg-[#1a1a1a] flex items-center justify-center rounded-xl border border-zinc-800">
+          <Phone size={24} className="text-white" />
+        </button>
+        <button 
+          disabled={!isFormValid}
+          onClick={onConfirm}
+          className={`flex-1 flex items-center justify-center gap-3 py-5 rounded-xl text-[13px] font-black uppercase tracking-widest transition-all ${isFormValid ? 'bg-[#25D366] text-white shadow-[0_10px_20px_rgba(37,211,102,0.2)]' : 'bg-zinc-900 text-zinc-700'}`}
+        >
+          <MessageSquare size={20} fill="white" />
+          Confirm Via WhatsApp
+        </button>
+      </div>
 
-        <div className="relative">
-          <label className="text-xs font-bold text-zinc-500 uppercase ml-1 mb-1 block">Notes (Optional)</label>
-          <div className="relative">
-            <StickyNote size={16} className="absolute left-4 top-4 text-zinc-600" />
-            <textarea 
-              placeholder="Specific requests or reference image link..."
-              value={notes}
-              onChange={(e) => onNotesChange(e.target.value)}
-              rows={3}
-              className="w-full bg-zinc-900 border border-zinc-800 rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:border-amber-500 transition-colors resize-none"
-            />
-          </div>
+      {/* Bottom Features */}
+      <div className="flex justify-between px-6 py-4">
+        <div className="flex items-center gap-2 text-[8px] font-black text-zinc-600 uppercase">
+           <div className="w-4 h-4 border border-zinc-800 flex items-center justify-center">✓</div>
+           Instant Confirm
+        </div>
+        <div className="flex items-center gap-2 text-[8px] font-black text-zinc-600 uppercase">
+           <div className="w-4 h-4 border border-zinc-800 flex items-center justify-center">☺</div>
+           Kid Friendly
+        </div>
+        <div className="flex items-center gap-2 text-[8px] font-black text-zinc-600 uppercase">
+           <div className="w-4 h-4 border border-zinc-800 flex items-center justify-center font-bold">P</div>
+           Parking
         </div>
       </div>
 
-      <button
-        disabled={!isFormValid}
-        onClick={onConfirm}
-        className={`
-          w-full py-5 rounded-2xl flex items-center justify-center gap-3 font-bold transition-all
-          ${isFormValid 
-            ? 'bg-amber-500 text-black hover:bg-amber-400 active:scale-[0.98]' 
-            : 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
-          }
-        `}
-      >
-        <Send size={20} />
-        CONFIRM & WHATSAPP
-      </button>
-      <p className="text-[10px] text-center text-zinc-500 px-4">
-        By confirming, you will be redirected to WhatsApp to send the booking details to the barber directly.
-      </p>
+      <div className="text-[8px] text-center text-zinc-700 font-bold uppercase tracking-widest leading-relaxed px-12">
+        By confirming you agree to our 24h cancellation policy. Late arrivals may forfeit their slot.
+      </div>
     </div>
   );
 };
